@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--执行generator插件生成文件的命令： call mvn mybatis-generator:generate -->
+    <!-- 引入配置文件 -->
+    <!--<properties resource="mybatis-generator/mybatisGeneratorinit.properties"/>-->
+    <!--classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 -->
+    <classPathEntry
+            location="${user.home}/.m2/repository/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar"/>
+
+    <!-- 一个数据库一个context -->
+    <!--defaultModelType="flat" 大数据字段，不分表 -->
+    <context id="MysqlTables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="autoDelimitKeywords" value="true"/>
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="mergeable" value="false"/>
+
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <!-- MySQL分页插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LimitPlugin">
+            <property name="startPage" value="0"/>
+        </plugin>
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
+        <plugin type="com.itfsw.mybatis.generator.plugins.LombokPlugin">
+            <property name="@Data" value="true"/>
+            <property name="@Builder" value="true"/>
+            <property name="@NoArgsConstructor" value="true"/>
+            <property name="@AllArgsConstructor" value="true"/>
+        </plugin>
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+        <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin">
+            <property name="allowMultiQueries" value="false"/>
+        </plugin>
+        <!-- 注释 -->
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+
+        <!--设置数据库连接驱动-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/demos?tinyInt1isBit=true"
+                        userId="root"
+                        password="root">
+            <!--
+                        <property name="useInformationSchema" value="true"/>
+            -->
+            <!--设置可以获取remarks信息-->
+            <property name="remarks" value="true"/>
+        </jdbcConnection>
+
+        <!--当字段类型是 DECIMAL或者 NUMERIC时，是否强制转换为BigDecimal,否的话会自动根据规模的大小选择合适的类型  -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+            <property name="useJSR310Types" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.example.demo.query_by_page1.dao.po" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="" value=""/>
+        </javaModelGenerator>
+
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources/query_by_page1/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.demo.query_by_page1.dao.mapper"
+                             targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 -->
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名，需要根据自己的需求修改-->
+
+        <!-- 示例勿删-->
+        <table tableName="student" domainObjectName="Student"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               selectByExampleQueryId="true"
+               enableDeleteByPrimaryKey="true"
+               enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true"
+               enableInsert="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

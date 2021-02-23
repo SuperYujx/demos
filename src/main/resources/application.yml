@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&&serverTimezone=Hongkong&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+
+
+mybatis:
+  # 指定实体类包路径
+  typeAliasesPackage: com.example.demo.query_by_page1.dao.po
+  # 指定xml文件扫描路径
+  mapper-locations: classpath*:query_by_page1/mapper/**/*.xml
